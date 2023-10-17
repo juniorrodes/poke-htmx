@@ -1,0 +1,9 @@
+FROM golang:1.21.3-alpine3.18
+
+WORKDIR /go/app
+COPY . .
+
+RUN apk add --update nodejs npm
+RUN npm install -g nodemon
+
+EXPOSE 8080

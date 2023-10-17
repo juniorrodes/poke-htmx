@@ -1,0 +1,17 @@
+<head>
+    <script src="resources/htmx.min.js"></script>
+</head>
+<body>
+    <form>
+        <input name="name" placeholder="Type your name">
+        <button type="submit" hx-post="/clicked"
+            hx-trigger="click"
+            hx-target="#parent-div"
+            hx-swap="innerHTML"
+        >
+            click me
+        </button>
+    </form>
+    <div id="parent-div">
+    </div>
+</body>

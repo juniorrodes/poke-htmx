@@ -1,0 +1,11 @@
+package components
+
+templ Header(names []string) {
+    <div>
+        <ul>
+            for _, name := range names {
+                <li> { name } </li>
+            }
+        </ul>
+    </div>
+}
