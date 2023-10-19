@@ -1,0 +1,39 @@
+package components
+
+import (
+    "github.com/juniorrodes/poke-htmx/internal/api/app/entities"
+    "fmt"
+    "reflect"
+)
+
+templ tableHeader(t reflect.Type) {
+    for i := 0; i < t.NumField(); i++ {
+        <th>
+            { t.Field(i).Name }
+        </th>
+    }
+}
+
+templ tableData(v reflect.Value, t reflect.Type) {
+    for i := 0; i < v.NumField(); i++ {
+        switch t.Field(i).Type.Kind() {
+		case reflect.Int:
+			<td>{ fmt.Sprintf("%d", v.Field(i).Int()) }</td>
+		case reflect.String:
+			<td>{ v.Field(i).String() }</td>
+        default:
+            <td></td>
+        }
+    }
+}
+
+templ BerryTable(berry entities.Berry) {
+    <table>
+        <tr>
+            @tableHeader(reflect.TypeOf(berry))
+        </tr>
+        <tr>
+            @tableData(reflect.ValueOf(berry), reflect.TypeOf(berry))
+        </tr>
+    </table>
+}

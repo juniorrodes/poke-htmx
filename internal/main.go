@@ -6,10 +6,10 @@ import (
 )
 
 func main() {
-	c := controller.NewController()
+	c := controller.NewBerryController()
 
 	r := internalRouter.NewRouter()
-	r.POST("/clicked", c.AddNameToGreet)
+	r.POST("/clicked", c.GetBerry)
 
 	r.ListenAndServe(":8080")
 }

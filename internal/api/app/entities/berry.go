@@ -12,7 +12,7 @@ type Berry struct {
 	Smoothness       int                    `json:"smoothness"`
 	SoilDryness      int                    `json:"soil_dryness"`
 	Fimrness         utils.NamedAPIResource `json:"firmness"`
-	Flavors          []BerryFlavor          `json:"flavors"`
+	Flavors          []BerryFlavorMap       `json:"flavors"`
 	Item             utils.NamedAPIResource `json:"item"`
 	NaturalGiftType  utils.NamedAPIResource `json:"natural_gift_type"`
 }
@@ -32,7 +32,12 @@ type BerryFirmness struct {
 type BerryFlavor struct {
 	Id          int                    `json:"id"`
 	Name        string                 `json:"name"`
-	Berries     []BerryFlavorMap       `json:"berries"`
+	Berries     []FlavorBerryMap       `json:"berries"`
 	ContestType utils.NamedAPIResource `json:"contest_type"`
 	Names       []utils.Name           `json:"names"`
+}
+
+type FlavorBerryMap struct {
+	Potency int                    `json:"potency"`
+	Flavor  utils.NamedAPIResource `json:"flavor"`
 }
