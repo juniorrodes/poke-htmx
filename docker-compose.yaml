@@ -7,4 +7,4 @@ services:
       - "8080:8080"
     volumes:
       - ".:/go/app"
-    command: nodemon --exec go run internal/main.go --signal SIGTERM
+    command: air -c .air.toml

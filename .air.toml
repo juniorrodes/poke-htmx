@@ -1,0 +1,35 @@
+root = "."
+temp_dir = "tmp"
+
+[build]
+pre_cmd = ["templ generate"]
+cmd = "go build -o bin/poke-htmx internal/main.go"
+bin = "bin/poke-htmx"
+include_ext = ["go", "templ"]
+exclude_dir = ["vendor", "tmp"]
+exclude_regex = ["_test\\.go"]
+exclude_unchanged = true
+log = "air.log"
+stop_on_error = true
+delay = 100
+
+[log]
+# Show log time
+time = false
+# Only show main log (silences watcher, build, runner)
+main_only = false
+
+[color]
+# Customize each part's color. If no color found, use the raw app log.
+main = "magenta"
+watcher = "cyan"
+build = "yellow"
+runner = "green"
+
+[misc]
+# Delete tmp directory on exit
+clean_on_exit = true
+
+[screen]
+clear_on_rebuild = true
+keep_scroll = true

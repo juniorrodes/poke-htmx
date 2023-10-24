@@ -3,7 +3,7 @@ FROM golang:1.21.3-alpine3.18
 WORKDIR /go/app
 COPY . .
 
-RUN apk add --update nodejs npm
-RUN npm install -g nodemon
+RUN go install github.com/cosmtrek/air@latest
+RUN go install github.com/a-h/templ/cmd/templ@latest
 
 EXPOSE 8080

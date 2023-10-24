@@ -9,6 +9,7 @@ import (
 	"github.com/juniorrodes/poke-htmx/internal/api/infrastructure/client"
 	internalRouter "github.com/juniorrodes/poke-htmx/internal/api/infrastructure/router"
 	"github.com/juniorrodes/poke-htmx/internal/components"
+	"github.com/juniorrodes/poke-htmx/pkg/reflector"
 )
 
 type BerryController interface {
@@ -45,7 +46,9 @@ func (c *berryController) GetBerry(r *http.Request) internalRouter.Response {
 		}
 	}
 
-	err = components.BerryTable(berry).Render(r.Context(), &response)
+	names, values := reflector.GetFieldsValuesAndNames(berry)
+
+	err = components.BerryTable(names, values).Render(r.Context(), &response)
 	if err != nil {
 		return internalRouter.Response{
 			StatusCode: http.StatusInternalServerError,

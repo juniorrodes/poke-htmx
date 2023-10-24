@@ -1,39 +1,49 @@
 package components
 
 import (
-    "github.com/juniorrodes/poke-htmx/internal/api/app/entities"
-    "fmt"
-    "reflect"
+    "github.com/juniorrodes/poke-htmx/pkg/reflector"
 )
 
-templ tableHeader(t reflect.Type) {
-    for i := 0; i < t.NumField(); i++ {
+templ tableHeader(names []string){
+    for _, name := range names {
         <th>
-            { t.Field(i).Name }
+            { name }
         </th>
     }
 }
 
-templ tableData(v reflect.Value, t reflect.Type) {
-    for i := 0; i < v.NumField(); i++ {
-        switch t.Field(i).Type.Kind() {
-		case reflect.Int:
-			<td>{ fmt.Sprintf("%d", v.Field(i).Int()) }</td>
-		case reflect.String:
-			<td>{ v.Field(i).String() }</td>
-        default:
-            <td></td>
-        }
+templ tableData(names []string, values reflector.ValuesMap) {
+    for _, name := range names {
+        <td>
+            if len(values[name]) == 1 {
+                if values[name][0].FieldName != nil {
+                    <p>{ *values[name][0].FieldName }</p>
+                }
+                <p>{ values[name][0].Value }</p>
+            } else {
+                for _, v := range values[name] {
+                    if v.FieldName == nil {
+                        <p>{ v.Value }</p>
+                    } else {
+                        <ul>
+                            <li>
+                                <p>{ *v.FieldName } { v.Value }</p>
+                            </li>
+                        </ul>
+                    }
+                }
+            }
+        </td>
     }
 }
 
-templ BerryTable(berry entities.Berry) {
+templ BerryTable(names []string, values reflector.ValuesMap) {
     <table>
         <tr>
-            @tableHeader(reflect.TypeOf(berry))
+            @tableHeader(names)
         </tr>
         <tr>
-            @tableData(reflect.ValueOf(berry), reflect.TypeOf(berry))
+            @tableData(names, values)
         </tr>
     </table>
 }
