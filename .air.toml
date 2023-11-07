@@ -11,7 +11,7 @@ exclude_regex = ["_test\\.go"]
 exclude_unchanged = true
 log = "air.log"
 stop_on_error = true
-delay = 100
+delay = 200
 
 [log]
 # Show log time
@@ -31,5 +31,5 @@ runner = "green"
 clean_on_exit = true
 
 [screen]
-clear_on_rebuild = true
+clear_on_rebuild = false
 keep_scroll = true

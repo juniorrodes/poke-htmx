@@ -1,7 +1,8 @@
 package components
 
 import (
-    "github.com/juniorrodes/poke-htmx/pkg/reflector"
+	"github.com/juniorrodes/poke-htmx/internal/api/app/entities"
+	"strconv"
 )
 
 templ tableHeader(names []string){
@@ -12,38 +13,26 @@ templ tableHeader(names []string){
     }
 }
 
-templ tableData(names []string, values reflector.ValuesMap) {
-    for _, name := range names {
-        <td>
-            if len(values[name]) == 1 {
-                if values[name][0].FieldName != nil {
-                    <p>{ *values[name][0].FieldName }</p>
-                }
-                <p>{ values[name][0].Value }</p>
-            } else {
-                for _, v := range values[name] {
-                    if v.FieldName == nil {
-                        <p>{ v.Value }</p>
-                    } else {
-                        <ul>
-                            <li>
-                                <p>{ *v.FieldName } { v.Value }</p>
-                            </li>
-                        </ul>
-                    }
-                }
-            }
-        </td>
-    }
+templ tableData(berry entities.Berry) {
+    <td>
+        {berry.Name}
+    </td>
+    <td>
+        { strconv.FormatInt(int64(berry.GrowthTime), 10) }
+    </td>
 }
 
-templ BerryTable(names []string, values reflector.ValuesMap) {
+templ BerryTable(names []string, values entities.Berry) {
     <table>
-        <tr>
-            @tableHeader(names)
-        </tr>
-        <tr>
-            @tableData(names, values)
-        </tr>
+        <thead>
+            <tr>
+                @tableHeader(names)
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @tableData(values)
+            </tr>
+        </tbody>
     </table>
 }

@@ -46,9 +46,9 @@ func (c *berryController) GetBerry(r *http.Request) internalRouter.Response {
 		}
 	}
 
-	names, values := reflector.GetFieldsValuesAndNames(berry)
+	headers := reflector.GetFieldsNames(berry)
 
-	err = components.BerryTable(names, values).Render(r.Context(), &response)
+	err = components.BerryTable(headers, berry).Render(r.Context(), &response)
 	if err != nil {
 		return internalRouter.Response{
 			StatusCode: http.StatusInternalServerError,
